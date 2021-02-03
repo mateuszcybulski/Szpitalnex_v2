@@ -5,6 +5,6 @@ namespace Szpitalnex.Database.Repositories.Base.Interfaces
 {
     public interface IDoctorRepository : IRepository<Doctor>
     {
-        IEnumerable<Doctor> GetAllDoctors();
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Szpitalnex.Database.Entities;
 using Szpitalnex.Core.Models;
 using Szpitalnex.Database.Repositories.Base.Interfaces;
+using Szpitalnex.Database.Repositories.Base;
 
 namespace Szpitalnex.Database.Repositories
 {
@@ -20,6 +21,11 @@ namespace Szpitalnex.Database.Repositories
         public IEnumerable<Medicine> GetAllMedicines()
         {
             return DbSet.Select(x => x);
+        }
+
+        IEnumerable<Medicine> IRepository<Medicine>.GetAll()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

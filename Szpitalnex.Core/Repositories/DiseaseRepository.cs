@@ -18,11 +18,15 @@ namespace Szpitalnex.Database.Repositories
         {
 
         }
-
+        /*
         public IEnumerable<Disease> GetAllDiseases()
         {
             return DbSet.Select(x => x);
-        }
+        }*/
 
+        IEnumerable<Disease> IRepository<Disease>.GetAll()
+        {
+            return DbSet.Select(x => x);
+        }
     }
 }

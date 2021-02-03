@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Szpitalnex.Core.Models;
 using Szpitalnex.Database.Entities;
+using Szpitalnex.Database.Repositories.Base;
 using Szpitalnex.Database.Repositories.Base.Interfaces;
 
 namespace Szpitalnex.Database.Repositories
@@ -34,6 +35,11 @@ namespace Szpitalnex.Database.Repositories
                                  .ThenInclude(x => x.Referrals)*/;
 
 
+        }
+
+        IEnumerable<Doctor> IRepository<Doctor>.GetAll()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

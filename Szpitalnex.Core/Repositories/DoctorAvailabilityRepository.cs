@@ -44,5 +44,9 @@ namespace Szpitalnex.Database.Repositories
                          .Where(x => x.Actual == false);
         }
 
+        IEnumerable<DoctorAvailability> IRepository<DoctorAvailability>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

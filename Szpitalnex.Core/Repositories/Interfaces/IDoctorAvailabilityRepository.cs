@@ -6,7 +6,6 @@ namespace Szpitalnex.Database.Repositories.Interfaces
 {
     public interface IDoctorAvailabilityRepository : IRepository<DoctorAvailability>
     {
-        IEnumerable<DoctorAvailability> GetAllDoctorAvailability();
         IEnumerable<DoctorAvailability> GetAllDoctorAvailabilityTrue();
         IEnumerable<DoctorAvailability> GetAllDoctorAvailabilityFalse();
     }

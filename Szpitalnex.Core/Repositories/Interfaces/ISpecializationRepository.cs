@@ -5,6 +5,6 @@ namespace Szpitalnex.Database.Repositories.Base.Interfaces
 {
     public interface ISpecializationRepository : IRepository<Specialization>
     {
-        IEnumerable<Specialization> GetAllSpecializations();
+
     }
 }

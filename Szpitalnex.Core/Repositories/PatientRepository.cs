@@ -4,6 +4,7 @@ using System.Linq;
 using Szpitalnex.Database.Entities;
 using Szpitalnex.Database.Repositories.Base.Interfaces;
 using Szpitalnex.Core.Models;
+using Szpitalnex.Database.Repositories.Base;
 
 namespace Szpitalnex.Database.Repositories
 {
@@ -21,6 +22,11 @@ namespace Szpitalnex.Database.Repositories
         {
             return DbSet.Include(x => x.Person)
                                 .ThenInclude(s => s.Address);
+        }
+
+        IEnumerable<Patient> IRepository<Patient>.GetAll()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Szpitalnex.Database.Repositories.Base.Interfaces
 {
     public interface IReferralRepository : IRepository<Referral>
     {
-        IEnumerable<Referral> GetAllReferrals();
+
     }
 }
