@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +13,9 @@ using Szpitalnex.Core.Models;
 using Szpitalnex.Database.Repositories;
 using Szpitalnex.Database.Repositories.Base.Interfaces;
 using Szpitalnex.Database.Repositories.Interfaces;
+using Szpitalnex.Infrastructure.Interfaces;
+using Szpitalnex.Infrastructure.Mappers;
+using Szpitalnex.Infrastructure.Models;
 
 namespace Szpitalnex.Api
 {
@@ -34,24 +34,23 @@ namespace Szpitalnex.Api
             services.AddDbContext<SzpitalnexContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SzpitalnexDatabase")));
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Szpitalnex.Api", Version = "v1" });
-            });
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+            services.AddScoped<IVisitRepository, VisitRepository>();
+            services.AddScoped<IDiseaseRepository, DiseaseRepository>();
+            services.AddScoped<IDiagnosedDiseaseRepository, DiagnosedDiseaseRepository>();
+            services.AddScoped<IReferralRepository, ReferralRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IPrescribedMedicineRepository, PrescribedMedicineRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IDoctorAvailabilityRepository, DoctorAvailabilityRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
-            services.AddTransient<IDoctorRepository, DoctorRepository>();
-            services.AddTransient<ISpecializationRepository, SpecializationRepository>();
-            services.AddTransient<IVisitRepository, VisitRepository>();
-            services.AddTransient<IDiseaseRepository, DiseaseRepository>();
-            services.AddTransient<IDiagnosedDiseaseRepository, DiagnosedDiseaseRepository>();
-            services.AddTransient<IReferralRepository, ReferralRepository>();
-            services.AddTransient<IMedicineRepository, MedicineRepository>();
-            services.AddTransient<IPrescribedMedicineRepository, PrescribedMedicineRepository>();
-            services.AddTransient<IPatientRepository, PatientRepository>();
-            services.AddTransient<IDoctorAvailabilityRepository, DoctorAvailabilityRepository>();
-            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddScoped<IVisitsService, VisitsService>();
+            
+            services.AddSingleton(DtoMapper.Initialize());
 
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,11 +59,14 @@ namespace Szpitalnex.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Szpitalnex.Api v1"));
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -72,7 +74,9 @@ namespace Szpitalnex.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

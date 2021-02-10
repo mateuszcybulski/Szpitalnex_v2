@@ -17,7 +17,7 @@ namespace Szpitalnex.Database.Repositories
 
         }
 
-        public IEnumerable<Visit> GetAllVisitsWithDetails()
+        public IQueryable<Visit> GetAllVisitsWithDetails()
         {
 
             return DbSet.Include(x => x.Patient)
@@ -31,7 +31,7 @@ namespace Szpitalnex.Database.Repositories
                                 .Select(x => x);
         }
 
-        public IEnumerable<Visit> GetAllVisits()
+        public IQueryable<Visit> GetAllVisits()
         {
             return DbSet.Include(x => x.Patient)
                             .ThenInclude(x => x.Person)
@@ -42,9 +42,10 @@ namespace Szpitalnex.Database.Repositories
 
         }
 
+        /*
         IEnumerable<Visit> IRepository<Visit>.GetAll()
         {
             throw new System.NotImplementedException();
-        }
+        }*/
     }
 }

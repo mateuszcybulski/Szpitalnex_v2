@@ -22,10 +22,10 @@ namespace Szpitalnex.Database.Repositories
         {
             return DbSet.Select(x => x);
         }
-
+        /*
         IEnumerable<Referral> IRepository<Referral>.GetAll()
         {
             throw new System.NotImplementedException();
-        }
+        }*/
     }
 }

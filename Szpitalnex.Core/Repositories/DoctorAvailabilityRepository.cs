@@ -43,10 +43,10 @@ namespace Szpitalnex.Database.Repositories
                             .ThenInclude(x => x.Specialization)
                          .Where(x => x.Actual == false);
         }
-
+        /*
         IEnumerable<DoctorAvailability> IRepository<DoctorAvailability>.GetAll()
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }

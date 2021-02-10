@@ -36,10 +36,10 @@ namespace Szpitalnex.Database.Repositories
 
 
         }
-
+        /*
         IEnumerable<Doctor> IRepository<Doctor>.GetAll()
         {
             throw new System.NotImplementedException();
-        }
+        }*/
     }
 }
